@@ -5,8 +5,6 @@
     <string name="tvHeading">Heading: 0.0</string>
 
     <string name="textview">x: 0.0</string>
-    <string name="textview2">y: 0.0</string>
-    <string name="textview3">z: 0.0</string>
     <string name="todo">TODO</string>
 
     <string name="heading_0_0">Heading: 0.0</string>
@@ -14,4 +12,5 @@
     <string name="y_0_0">y: 0.0</string>
     <string name="x_0_0">x: 0.0</string>
     <string name="button3">Button3</string>
+    <string name="color">TextView</string>
 </resources>

@@ -1,8 +1,12 @@
 package com.example.myapplication;
 
+import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 
+import android.os.Build;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.hardware.SensorEvent;
@@ -25,11 +29,14 @@ public class compass extends AppCompatActivity implements SensorEventListener {
     private float DegreeStart = 0f;
 
     TextView DegreeTV;
+    Vibrator v;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compass);
+         v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         //
         compassimage = (ImageView) findViewById(R.id.compass_image);
@@ -82,7 +89,16 @@ public class compass extends AppCompatActivity implements SensorEventListener {
         // Start animation of compass image
         compassimage.startAnimation(ra);
         DegreeStart = -degree;
+        if (degree == 2.0) {
+            // Vibrate for 500 milliseconds
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+            } else {
+                //deprecated in API 26
+                v.vibrate(500);
+            }
 
+        }
     }
 
     @Override
