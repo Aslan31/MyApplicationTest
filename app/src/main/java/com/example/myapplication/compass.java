@@ -1,8 +1,8 @@
 package com.example.myapplication;
 
-import android.annotation.SuppressLint;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.hardware.SensorEvent;
@@ -32,10 +32,10 @@ public class compass extends AppCompatActivity implements SensorEventListener {
         setContentView(R.layout.activity_compass);
 
         //
-        compassimage = (ImageView) findViewById(R.id.imageView);
+        compassimage = (ImageView) findViewById(R.id.compass_image);
 
         // TextView that will display the degree
-        DegreeTV = (TextView) findViewById(R.id.tvHeading);
+        DegreeTV = (TextView) findViewById(R.id.DegreeTV);
 
         // initialize your android device sensor capabilities
         SensorManage = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -58,7 +58,6 @@ public class compass extends AppCompatActivity implements SensorEventListener {
                 SensorManager.SENSOR_DELAY_GAME);
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     public void onSensorChanged(SensorEvent event) {
 

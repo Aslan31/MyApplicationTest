@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void onClick2(View v) {
-        Intent intent = new Intent(this, acceleomater.class);
+        Intent intent = new Intent(this, acceleomater_3.class);
         startActivity(intent);
 
     }
