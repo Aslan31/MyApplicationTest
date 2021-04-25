@@ -61,7 +61,7 @@ public class compass extends AppCompatActivity implements SensorEventListener {
         super.onResume();
 
         // code for system's orientation sensor registered listeners
-        SensorManage.registerListener(this, SensorManage.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
+        SensorManage.registerListener(this, SensorManage.getDefaultSensor(Sensor.TYPE_ORIENTATION),
                 SensorManager.SENSOR_DELAY_GAME);
     }
 
