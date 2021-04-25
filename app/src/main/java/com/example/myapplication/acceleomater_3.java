@@ -3,14 +3,16 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.text.Html;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,10 +26,17 @@ public class acceleomater_3 extends AppCompatActivity implements SensorEventList
     private View view;
     private SensorManager SensorManage;
     private long lastUpdate;
+    Sensor sensor;
+    View root1;
+    View root2;
+    View root3;
+    Vibrator vx;
 
+    @SuppressLint("CutPasteId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        vx = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         setContentView(R.layout.activity_acceleomater_3);
         x_axel = (TextView) findViewById(R.id.textView6);
@@ -36,11 +45,20 @@ public class acceleomater_3 extends AppCompatActivity implements SensorEventList
         SensorManage = (SensorManager) getSystemService(SENSOR_SERVICE);
 
 
+
+        View someView1 = findViewById(R.id.textView4);
+        View someView2 = findViewById(R.id.textView5);
+        View someView3 = findViewById(R.id.textView6);
+         root1 = someView1.getRootView();
+        root2 = someView2.getRootView();
+        root3 = someView3.getRootView();
+
+
         lastUpdate = System.currentTimeMillis();
 
-        setContentView(R.layout.activity_acceleomater_3);
+       /* setContentView(R.layout.activity_acceleomater_3);
         view = findViewById(R.id.textView);
-        view.setBackgroundColor(Color.GREEN);
+        view.setBackgroundColor(Color.GREEN);*/
     }
 
 
@@ -52,16 +70,77 @@ public class acceleomater_3 extends AppCompatActivity implements SensorEventList
         float z_degree = Math.round(event.values[2]);
 
 
-        x_axel.setText("Heading: " + Html.fromHtml(String.valueOf(x_degree)) + " degrees");
-        y_axel.setText("Heading: " + Float.toString(y_degree) + " degrees");
-        z_axel.setText("Heading: " + Float.toString(z_degree) + " degrees");
+        x_axel.setText("x_axel: " + Float.toString(x_degree) + " degrees");
+        y_axel.setText("y_axel: " + Float.toString(y_degree) + " degrees");
+        z_axel.setText("z_axel: " + Float.toString(z_degree) + " degrees");
+
+        //change the color of background
         float[] values = event.values;
-        // Movement
+
         float x = values[0];
         float y = values[1];
         float z = values[2];
 
-        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+
+
+        float accelationSquareRoot = (x * x + y * y + z * z)
+                / (SensorManager.GRAVITY_EARTH * SensorManager.GRAVITY_EARTH);
+        long actualTime = event.timestamp;
+        if (accelationSquareRoot >= 2) //
+        {
+            if (actualTime - lastUpdate < 200) {
+                return;
+            }
+            lastUpdate = actualTime;
+
+            Toast.makeText(this, "Device was shuffed", Toast.LENGTH_SHORT)
+                    .show();
+            if (color) {
+
+
+                root3.setBackgroundColor(Color.BLUE);
+            } else {
+                root2.setBackgroundColor(Color.RED);
+            }
+            color = !color;
+        }
+
+        if (x == 1.0) {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vx.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+            } else {
+
+                vx.vibrate(500);
+            }
+
+        }
+        if (y == 1.0) {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vx.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+            } else {
+
+                vx.vibrate(500);
+            }
+
+        }
+        if (z == 1.0) {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vx.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+            } else {
+
+                vx.vibrate(500);
+            }
+
+        }
+
+
+
+
+
+        /*if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
 
 
             float accelationSquareRoot = (x * x + y * y + z * z)
@@ -85,7 +164,7 @@ public class acceleomater_3 extends AppCompatActivity implements SensorEventList
 
 
             }
-        }
+        }*/
     }
     @Override
     protected void onPause() {
@@ -101,6 +180,7 @@ public class acceleomater_3 extends AppCompatActivity implements SensorEventList
         // code for system's orientation sensor registered listeners
         SensorManage.registerListener(this, SensorManage.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                 SensorManager.SENSOR_DELAY_GAME);
+
     }
 
     @Override

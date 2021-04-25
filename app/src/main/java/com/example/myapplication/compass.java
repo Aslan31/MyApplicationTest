@@ -61,7 +61,7 @@ public class compass extends AppCompatActivity implements SensorEventListener {
         super.onResume();
 
         // code for system's orientation sensor registered listeners
-        SensorManage.registerListener(this, SensorManage.getDefaultSensor(Sensor.TYPE_ORIENTATION),
+        SensorManage.registerListener(this, SensorManage.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
                 SensorManager.SENSOR_DELAY_GAME);
     }
 
@@ -89,7 +89,7 @@ public class compass extends AppCompatActivity implements SensorEventListener {
         // Start animation of compass image
         compassimage.startAnimation(ra);
         DegreeStart = -degree;
-        if (degree == 2.0) {
+        if (degree == 1.0) {
             // Vibrate for 500 milliseconds
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
